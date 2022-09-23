@@ -14,6 +14,8 @@ public class PaymentPage {
     private SelenideElement cardOwner = Selenide.$x("//span[text()='Владелец']/following-sibling::span/input");
     private SelenideElement cvc = Selenide.$x("//span[text()='CVC/CVV']/following-sibling::span/input");
 
+    private SelenideElement proceedBtn = Selenide.$x("//span[text()='Продолжить']");
+
     public PaymentPage() {
         heading.shouldBe(visible);
     }

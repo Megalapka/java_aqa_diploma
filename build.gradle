@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "io.freefair.lombok" version "6.5.0.3"
 }
 
 group 'ru.netology'
@@ -15,10 +16,13 @@ repositories {
 
 dependencies {
 
+    implementation 'org.projectlombok:lombok:1.18.22'
+    implementation 'org.projectlombok:lombok:1.18.22'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
     testImplementation 'mysql:mysql-connector-java:8.0.22'
     testImplementation 'commons-dbutils:commons-dbutils:1.7'
     testImplementation 'com.codeborne:selenide:5.19.0'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
 }
 
 test {
