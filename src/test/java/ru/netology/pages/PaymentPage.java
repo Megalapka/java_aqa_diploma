@@ -4,6 +4,8 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.*;
 
 public class PaymentPage {
@@ -33,10 +35,10 @@ public class PaymentPage {
     }
 
     public void errorMessDeclineFromBank() {
-        errorMessDecline.shouldBe(visible);
+        errorMessDecline.shouldBe(visible, Duration.ofSeconds(15));
     }
 
     public void approvedMessFromBank() {
-        approvedMess.shouldBe(visible);
+        approvedMess.shouldBe(visible, Duration.ofSeconds(15));
     }
 }
