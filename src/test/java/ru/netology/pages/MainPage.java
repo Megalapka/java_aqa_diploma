@@ -10,12 +10,12 @@ public class MainPage {
 
 
     public PaymentPage paymentPage() {
-
+        paymentBtn.click();
         return new PaymentPage();
     }
 
     public CreditPage creditPage() {
-
+        creditBtn.click();
         return new CreditPage();
     }
 }

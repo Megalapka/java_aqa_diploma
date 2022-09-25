@@ -46,8 +46,20 @@ public class DataHelper {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CreditCardData {
+        private String id;
+        private String bank_id; //пока будем брать данные из поля bank_id вместо id
         private String created;
         private String status;
-        private String id; //пока в этом запросе будем брать данные из поля bank_id
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PaymentCardData {
+        private String id;
+        private String amount;
+        private String created;
+        private String status;
+        private String transaction_id; //пока будем брать данные из поля transaction_id вместо id
     }
 }
