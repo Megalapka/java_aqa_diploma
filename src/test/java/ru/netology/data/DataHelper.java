@@ -16,16 +16,22 @@ public class DataHelper {
 
         //var randomMonth = faker.number().numberBetween(01, 12);
         // на данный момент программа не принимает однозначные числа. Надо 0 ставить перед однозначными
-        var randomName = faker.name().firstName();
+        var randomName = faker.name().fullName();
 
         return new CardInfo("4444 4444 4444 4441", "11", "23", randomName, "123");
     }
 
     public static CardInfo generateDataWithDeclineCard() {
 
-        var randomName = faker.name().firstName();
+        var randomName = faker.name().fullName();
 
         return new CardInfo("4444 4444 4444 4442", "11", "23", randomName, "123");
+    }
+
+    public static CardInfo generateDataWithRandomCardNumber() {
+        var randomName = faker.name().fullName();
+        var randomCardNumber = faker.number().digits(16);
+        return  new CardInfo(randomCardNumber, "11", "23", randomName, "123");
     }
 
 

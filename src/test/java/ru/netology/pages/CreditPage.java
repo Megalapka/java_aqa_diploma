@@ -9,7 +9,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.visible;
 
 public class CreditPage {
-    private SelenideElement heading = Selenide.$x("//h3[text()='Оплата по карте']");
+    private SelenideElement heading = Selenide.$x("//h3[text()='Кредит по данным карты']");
 
     private SelenideElement cardNumber = Selenide.$x("//span[text()='Номер карты']/following-sibling::span/input");
     private SelenideElement month = Selenide.$x("//span[text()='Месяц']/following-sibling::span/input");
@@ -25,7 +25,7 @@ public class CreditPage {
         heading.shouldBe(visible);
     }
 
-    public void InsertCreditCardDataForBank(DataHelper.CardInfo cardInfo) {
+    public void insertCreditCardDataForBank(DataHelper.CardInfo cardInfo) {
         cardNumber.setValue(cardInfo.getCardNumber());
         month.setValue(cardInfo.getMonth());
         year.setValue(cardInfo.getYear());
