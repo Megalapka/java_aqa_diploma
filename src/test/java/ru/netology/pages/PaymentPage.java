@@ -18,8 +18,21 @@ public class PaymentPage {
     private SelenideElement cvcField = Selenide.$x("//span[text()='CVC/CVV']/following-sibling::span/input");
 
     private SelenideElement proceedBtn = Selenide.$x("//span[text()='Продолжить']");
-    private SelenideElement errorMessWithDecline = Selenide.$x("//div[text()='Ошибка! Банк отказал в проведении операции.']");
+    private SelenideElement errorMessWithDecline = Selenide.$x("//div[text()='Ошибка!" +
+            " Банк отказал в проведении операции.']");
     private SelenideElement approvedMess = Selenide.$x("//div[text()='Операция одобрена Банком.']");
+
+
+    private SelenideElement warningCardNumberField = Selenide.$x("//span[text()='Номер карты']" +
+            "/following-sibling::span[@class='input__sub']");
+    private SelenideElement warningMonthField = Selenide.$x("//span[text()='Месяц']" +
+            "/following-sibling::span[@class='input__sub']");
+    private SelenideElement warningYearField = Selenide.$x("//span[text()='Год']" +
+            "/following-sibling::span[@class='input__sub']");
+    private SelenideElement warningCardOwnerField = Selenide.$x("//span[text()='Владелец']" +
+            "/following-sibling::span[@class='input__sub']");
+    private SelenideElement warningCvcField = Selenide.$x("//span[text()='CVC/CVV']" +
+            "/following-sibling::span[@class='input__sub']");
 
     public PaymentPage() {
         heading.shouldBe(visible);
@@ -40,5 +53,18 @@ public class PaymentPage {
 
     public void checkApprovedMessFromBank() {
         approvedMess.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
+    public void insertPaymentCardDataWithEmptyCardNumberField(DataHelper.CardInfo cardInfo) {
+        monthField.setValue(cardInfo.getMonth());
+        yearField.setValue(cardInfo.getYear());
+        cardOwnerField.setValue(cardInfo.getCardOwner());
+        cvcField.setValue(cardInfo.getCvc());
+        proceedBtn.click();
+    }
+
+    public void checkWarningUnderCardNumberField(String warningText) {
+        warningCardNumberField.shouldBe(visible);
+        warningCardNumberField.shouldHave(text(warningText));
     }
 }
