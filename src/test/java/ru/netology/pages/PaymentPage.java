@@ -5,8 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.*;
 
@@ -40,7 +38,7 @@ public class PaymentPage {
         heading.shouldBe(visible);
     }
 
-    public void insertPaymentCardDataForBank(DataHelper.CardInfo cardInfo) {
+    public void insertValidPaymentCardDataForBank(DataHelper.CardInfo cardInfo) {
         cardNumberField.setValue(cardInfo.getCardNumber());
         monthField.setValue(cardInfo.getMonth());
         yearField.setValue(cardInfo.getYear());

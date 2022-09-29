@@ -6,8 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
-import ru.netology.data.SQLHelper;
-import ru.netology.pages.CreditPage;
 import ru.netology.pages.MainPage;
 import ru.netology.pages.PaymentPage;
 
@@ -32,7 +30,6 @@ public class PaymentTest {
         open("http://localhost:8080/");
         //SQLHelper.cleanDatabase();
 
-        System.out.println(DataHelper.currentMonth() + "." + DataHelper.currentYear());
 
     }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -45,7 +42,7 @@ public class PaymentTest {
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var paymentPage = new PaymentPage();
-        paymentPage.insertPaymentCardDataForBank(cardInfo);
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
         paymentPage.checkApprovedMessFromBank();
     }
 
@@ -58,8 +55,22 @@ public class PaymentTest {
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithDeclineCard();
         var paymentPage = new PaymentPage();
-        paymentPage.insertPaymentCardDataForBank(cardInfo);
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
         paymentPage.checkErrorMessDeclineFromBank();
+    }
+
+    @Test
+    @DisplayName("Should decline payment card with approved test card and max date")
+    void shouldSuccessTransactionWithMaxAllowedDate() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.paymentPage();
+        var currentMonth = DataHelper.getCurrentMonth();
+        var maxYear = Integer.parseInt(DataHelper.getCurrentYear()) + 5;
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(currentMonth,
+                String.valueOf(maxYear));
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkApprovedMessFromBank();
     }
 //    граничные значения срока действия карты "ГОД" (максимум 5 лет)
 //    граничные значения срока действия карты "ГОД" (минимум 0 мес, в текущем месяце карта ещё должна быть действительна)
@@ -75,7 +86,7 @@ public class PaymentTest {
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithRandomCardNumber();
         var paymentPage = new PaymentPage();
-        paymentPage.insertPaymentCardDataForBank(cardInfo);
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
         paymentPage.checkErrorMessDeclineFromBank();
     }
 

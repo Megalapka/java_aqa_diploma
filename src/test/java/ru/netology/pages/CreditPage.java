@@ -43,7 +43,7 @@ public class CreditPage {
         heading.shouldBe(visible);
     }
 
-    public void insertCreditCardDataForBank(DataHelper.CardInfo cardInfo) {
+    public void insertValidCreditCardDataForBank(DataHelper.CardInfo cardInfo) {
         cardNumberField.setValue(cardInfo.getCardNumber());
         monthField.setValue(cardInfo.getMonth());
         yearField.setValue(cardInfo.getYear());

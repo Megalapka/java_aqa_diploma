@@ -34,7 +34,7 @@ public class CreditTest {
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var creditPage = new CreditPage();
-        creditPage.insertCreditCardDataForBank(cardInfo);
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
         creditPage.checkApprovedMessFromBank();
     }
 
@@ -47,7 +47,7 @@ public class CreditTest {
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithDeclineCard();
         var creditPage = new CreditPage();
-        creditPage.insertCreditCardDataForBank(cardInfo);
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
         creditPage.checkErrorMessDeclineFromBank();
     }
 
@@ -65,7 +65,7 @@ public class CreditTest {
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithRandomCardNumber();
         var creditPage = new CreditPage();
-        creditPage.insertCreditCardDataForBank(cardInfo);
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
         creditPage.checkErrorMessDeclineFromBank();
     }
 
@@ -77,7 +77,7 @@ public class CreditTest {
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithRandomCardNumber();
         var paymentPage = new PaymentPage();
-        paymentPage.insertPaymentCardDataForBank(cardInfo);
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
         paymentPage.checkErrorMessDeclineFromBank();
     }
 
