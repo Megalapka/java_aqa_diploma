@@ -67,4 +67,52 @@ public class PaymentPage {
         warningCardNumberField.shouldBe(visible);
         warningCardNumberField.shouldHave(text(warningText));
     }
+
+    public void insertPaymentCardDataWithEmptyMonthField(DataHelper.CardInfo cardInfo) {
+        cardNumberField.setValue(cardInfo.getCardNumber());
+        yearField.setValue(cardInfo.getYear());
+        cardOwnerField.setValue(cardInfo.getCardOwner());
+        cvcField.setValue(cardInfo.getCvc());
+        proceedBtn.click();
+    }
+    public void checkWarningUnderMonthField(String warningText) {
+        warningMonthField.shouldBe(visible);
+        warningMonthField.shouldHave(text(warningText));
+    }
+
+    public void insertPaymentCardDataWithEmptyYearField(DataHelper.CardInfo cardInfo) {
+        cardNumberField.setValue(cardInfo.getCardNumber());
+        monthField.setValue(cardInfo.getMonth());
+        cardOwnerField.setValue(cardInfo.getCardOwner());
+        cvcField.setValue(cardInfo.getCvc());
+        proceedBtn.click();
+    }
+    public void checkWarningUnderYearField(String warningText) {
+        warningYearField.shouldBe(visible);
+        warningYearField.shouldHave(text(warningText));
+    }
+
+    public void insertPaymentCardDataWithEmptyCardOwnerField(DataHelper.CardInfo cardInfo) {
+        cardNumberField.setValue(cardInfo.getCardNumber());
+        monthField.setValue(cardInfo.getMonth());
+        yearField.setValue(cardInfo.getYear());
+        cvcField.setValue(cardInfo.getCvc());
+        proceedBtn.click();
+    }
+    public void checkWarningUnderCardOwnerField(String warningText) {
+        warningCardOwnerField.shouldBe(visible);
+        warningCardOwnerField.shouldHave(text(warningText));
+    }
+
+    public void insertPaymentCardDataWithEmptyCvcField(DataHelper.CardInfo cardInfo) {
+        cardNumberField.setValue(cardInfo.getCardNumber());
+        monthField.setValue(cardInfo.getMonth());
+        yearField.setValue(cardInfo.getYear());
+        cardOwnerField.setValue(cardInfo.getCardOwner());
+        proceedBtn.click();
+    }
+    public void checkWarningUnderCvcField(String warningText) {
+        warningCvcField.shouldBe(visible);
+        warningCvcField.shouldHave(text(warningText));
+    }
 }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
 import ru.netology.pages.CreditPage;
 import ru.netology.pages.MainPage;
+import ru.netology.pages.PaymentPage;
 
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
@@ -67,8 +68,80 @@ public class CreditTest {
         creditPage.insertCreditCardDataForBank(cardInfo);
         creditPage.checkErrorMessDeclineFromBank();
     }
-//    дата с истёкшим сроком действия карты
-//    оставить поля пустыми (проверить все по очереди, кроме поля "Владелец")
+
+    @Test
+    @DisplayName("Should decline payment card with random test card")
+    void shouldDeclineWithRandomPaymentCard() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithRandomCardNumber();
+        var paymentPage = new PaymentPage();
+        paymentPage.insertPaymentCardDataForBank(cardInfo);
+        paymentPage.checkErrorMessDeclineFromBank();
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with empty card number field")
+    void shouldShowMessWithEmptyCardNumberField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        var creditPage = new CreditPage();
+        creditPage.insertCreditCardDataWithEmptyCardNumberField(cardInfo);
+        creditPage.checkWarningUnderCardNumberField("Неверный формат");
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with empty month field")
+    void shouldShowMessWithEmptyMonthField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        var creditPage = new CreditPage();
+        creditPage.insertCreditCardDataWithEmptyMonthField(cardInfo);
+        creditPage.checkWarningUnderMonthField("Неверный формат");
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with empty year field")
+    void shouldShowMessWithEmptyYearField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        var creditPage = new CreditPage();
+        creditPage.insertCreditCardDataWithEmptyYearField(cardInfo);
+        creditPage.checkWarningUnderYearField("Неверный формат");
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with empty card owner field")
+    void shouldShowMessWithEmptyCardOwnerField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        var creditPage = new CreditPage();
+        creditPage.insertCreditCardDataWithEmptyCardOwnerField(cardInfo);
+        creditPage.checkWarningUnderCardOwnerField("Поле обязательно для заполнения");
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with empty cvc field")
+    void shouldShowMessWithEmptyCvcField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        var creditPage = new CreditPage();
+        creditPage.insertCreditCardDataWithEmptyCvcField(cardInfo);
+        creditPage.checkWarningUnderCvcField("Неверный формат");
+    }
+    //    дата с истёкшим сроком действия карты
+
 //    некорректный месяц (например, "19")
 //    граничные значения срока действия карты "ГОД" (максимум 3 года)
 //    граничные значения срока действия карты "ГОД" (минимум 0 мес, в текущем месяце карта ещё должна быть действительна)

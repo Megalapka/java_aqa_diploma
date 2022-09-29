@@ -79,18 +79,64 @@ public class PaymentTest {
         paymentPage.checkErrorMessDeclineFromBank();
     }
 
-
-    //    оставить поля пустыми (проверить все по очереди)
     @Test
     @DisplayName("Should to show red warning with empty card number field")
     void shouldShowMessWithEmptyCardNumberField() {
         var mainPage = open("http://localhost:8080/", MainPage.class);
 
         mainPage.paymentPage();
-        var cardInfo = DataHelper.generateDataWithRandomCardNumber();
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
         var paymentPage = new PaymentPage();
         paymentPage.insertPaymentCardDataWithEmptyCardNumberField(cardInfo);
         paymentPage.checkWarningUnderCardNumberField("Неверный формат");
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with empty month field")
+    void shouldShowMessWithEmptyMonthField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        var paymentPage = new PaymentPage();
+        paymentPage.insertPaymentCardDataWithEmptyMonthField(cardInfo);
+        paymentPage.checkWarningUnderMonthField("Неверный формат");
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with empty year field")
+    void shouldShowMessWithEmptyYearField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        var paymentPage = new PaymentPage();
+        paymentPage.insertPaymentCardDataWithEmptyYearField(cardInfo);
+        paymentPage.checkWarningUnderYearField("Неверный формат");
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with empty card owner field")
+    void shouldShowMessWithEmptyCardOwnerField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        var paymentPage = new PaymentPage();
+        paymentPage.insertPaymentCardDataWithEmptyCardOwnerField(cardInfo);
+        paymentPage.checkWarningUnderCardOwnerField("Поле обязательно для заполнения");
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with empty cvc field")
+    void shouldShowMessWithEmptyCvcField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        var paymentPage = new PaymentPage();
+        paymentPage.insertPaymentCardDataWithEmptyCvcField(cardInfo);
+        paymentPage.checkWarningUnderCvcField("Неверный формат");
     }
 
 //    дата с истёкшим сроком действия карты
