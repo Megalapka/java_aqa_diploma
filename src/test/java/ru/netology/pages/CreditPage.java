@@ -24,7 +24,7 @@ public class CreditPage {
             "/following-sibling::span/input");
 
     private SelenideElement proceedBtn = Selenide.$x("//span[text()='Продолжить']");
-    private SelenideElement errorMessWithDecline = Selenide.$x("//div[text()='Ошибка! " +
+    private SelenideElement errorMessWithDecline = Selenide.$x("//div[text()='Ошибка!" +
             " Банк отказал в проведении операции.']");
     private SelenideElement approvedMess = Selenide.$x("//div[text()='Операция одобрена Банком.']");
 

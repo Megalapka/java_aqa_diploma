@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
+import ru.netology.data.SQLHelper;
 import ru.netology.pages.MainPage;
 import ru.netology.pages.PaymentPage;
 
@@ -28,7 +29,7 @@ public class PaymentTest {
     @Test
     void testMyCode() {
         open("http://localhost:8080/");
-        //SQLHelper.cleanDatabase();
+        SQLHelper.cleanDatabase();
 
 
     }
@@ -60,7 +61,7 @@ public class PaymentTest {
     }
 
     @Test
-    @DisplayName("Should decline payment card with approved test card and max date")
+    @DisplayName("Should approved payment card with approved test card and max date")
     void shouldSuccessTransactionWithMaxAllowedDate() {
         var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
@@ -72,7 +73,33 @@ public class PaymentTest {
         paymentPage.insertValidPaymentCardDataForBank(cardInfo);
         paymentPage.checkApprovedMessFromBank();
     }
-//    граничные значения срока действия карты "ГОД" (максимум 5 лет)
+
+    @Test
+    @DisplayName("Should approved payment card with approved test card and max date minus 1 month")
+    void shouldSuccessTransactionWithPreMaxAllowedDate() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.paymentPage();
+        var currentMonth = Integer.parseInt(DataHelper.getCurrentMonth());
+        var preMaxMonth = 0;
+        var maxYear = Integer.parseInt(DataHelper.getCurrentYear()) + 5;
+
+        if (currentMonth == 1) {
+            preMaxMonth = 12;
+            maxYear = maxYear - 1;
+        } else preMaxMonth = currentMonth - 1;
+
+        String strPreMaxMonth = "";
+        if (preMaxMonth < 10) {
+            strPreMaxMonth = "0" + preMaxMonth;
+        }
+
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(strPreMaxMonth,
+                String.valueOf(maxYear));
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkApprovedMessFromBank();
+    }
+
 //    граничные значения срока действия карты "ГОД" (минимум 0 мес, в текущем месяце карта ещё должна быть действительна)
 //    граничные значения по длине имени владельца карты (максимум 21 символ, включая пробел)
 //    граничные значения по длине имени владельца карты (минимум 3 символа, включая пробел) - здесь я уже фантазирую, но мне кажется в этом есть смысл.

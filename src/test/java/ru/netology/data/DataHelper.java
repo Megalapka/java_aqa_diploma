@@ -13,10 +13,8 @@ public class DataHelper {
     private static Faker faker = new Faker(new Locale("en"));
 
     private static int validYear = Integer.parseInt(getCurrentYear()) + 1;
-    public static CardInfo generateDataWithApprovedCard() {
 
-        //var randomMonth = faker.number().numberBetween(01, 12);
-        // на данный момент программа не принимает однозначные числа. Надо 0 ставить перед однозначными
+    public static CardInfo generateDataWithApprovedCard() {
         var randomName = faker.name().fullName();
         var randomCvc = faker.number().digits(3);
         return new CardInfo("4444 4444 4444 4441", getCurrentMonth(), String.valueOf(validYear),

@@ -51,7 +51,47 @@ public class CreditTest {
         creditPage.checkErrorMessDeclineFromBank();
     }
 
-//    граничные значения срока действия карты "ГОД" (максимум 5 лет)
+    @Test
+    @DisplayName("Should approved credit card with approved test card and max date")
+    void shouldSuccessTransactionWithMaxAllowedDate() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.creditPage();
+        var currentMonth = DataHelper.getCurrentMonth();
+        var maxYear = Integer.parseInt(DataHelper.getCurrentYear()) + 5;
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(currentMonth,
+                String.valueOf(maxYear));
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkApprovedMessFromBank();
+    }
+
+
+    @Test
+    @DisplayName("Should approved credit card with approved test card and max date minus 1 month")
+    void shouldSuccessTransactionWithPreMaxAllowedDate() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.creditPage();
+        var currentMonth = Integer.parseInt(DataHelper.getCurrentMonth());
+        var preMaxMonth = 0;
+        var maxYear = Integer.parseInt(DataHelper.getCurrentYear()) + 5;
+
+        if (currentMonth == 1) {
+            preMaxMonth = 12;
+            maxYear = maxYear - 1;
+        } else preMaxMonth = currentMonth - 1;
+
+        String strPreMaxMonth = "";
+        if (preMaxMonth < 10) {
+            strPreMaxMonth = "0" + preMaxMonth;
+        }
+
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(strPreMaxMonth,
+                String.valueOf(maxYear));
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkApprovedMessFromBank();
+    }
+
 //    граничные значения срока действия карты "ГОД" (минимум 0 мес, в текущем месяце карта ещё должна быть действительна)
 //    граничные значения по длине имени владельца карты (максимум 21 символ, включая пробел)
 //    граничные значения по длине имени владельца карты (минимум 3 символа, включая пробел) - здесь я уже фантазирую, но мне кажется в этом есть смысл.
@@ -59,7 +99,7 @@ public class CreditTest {
 
 
     @Test
-    @DisplayName("Should decline payment card with random test card")
+    @DisplayName("Should decline credit card with random test card")
     void shouldDeclineWithRandomCreditCard() {
         var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
@@ -67,18 +107,6 @@ public class CreditTest {
         var creditPage = new CreditPage();
         creditPage.insertValidCreditCardDataForBank(cardInfo);
         creditPage.checkErrorMessDeclineFromBank();
-    }
-
-    @Test
-    @DisplayName("Should decline payment card with random test card")
-    void shouldDeclineWithRandomPaymentCard() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
-        mainPage.paymentPage();
-        var cardInfo = DataHelper.generateDataWithRandomCardNumber();
-        var paymentPage = new PaymentPage();
-        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
-        paymentPage.checkErrorMessDeclineFromBank();
     }
 
     @Test
