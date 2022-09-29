@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
 import ru.netology.data.SQLHelper;
+import ru.netology.pages.CreditPage;
 import ru.netology.pages.MainPage;
 import ru.netology.pages.PaymentPage;
 
@@ -29,10 +30,9 @@ public class PaymentTest {
     @Test
     void testMyCode() {
         open("http://localhost:8080/");
-        SQLHelper.cleanDatabase();
+        //SQLHelper.cleanDatabase();
 
-//        System.out.println(SQLHelper.getCreditCardData());
-//        System.out.println(SQLHelper.getPaymentCardData());
+        System.out.println(DataHelper.currentMonth() + "." + DataHelper.currentYear());
 
     }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -138,6 +138,21 @@ public class PaymentTest {
         paymentPage.insertPaymentCardDataWithEmptyCvcField(cardInfo);
         paymentPage.checkWarningUnderCvcField("Неверный формат");
     }
+
+    @Test
+    @DisplayName("Should to show red warning with empty all field")
+    void shouldShowMessWithEmptyAllField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.paymentPage();
+        var paymentPage = new PaymentPage();
+        paymentPage.clickProceedButton();
+        paymentPage.checkWarningUnderCardNumberField("Неверный формат");
+        paymentPage.checkWarningUnderMonthField("Неверный формат");
+        paymentPage.checkWarningUnderYearField("Неверный формат");
+        paymentPage.checkWarningUnderCardOwnerField("Поле обязательно для заполнения");
+        paymentPage.checkWarningUnderCvcField("Неверный формат");
+    }
+
 
 //    дата с истёкшим сроком действия карты
 //    некорректный месяц (например, "78")

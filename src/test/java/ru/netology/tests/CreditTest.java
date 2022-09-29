@@ -140,6 +140,21 @@ public class CreditTest {
         creditPage.insertCreditCardDataWithEmptyCvcField(cardInfo);
         creditPage.checkWarningUnderCvcField("Неверный формат");
     }
+
+    @Test
+    @DisplayName("Should to show red warning with empty all field")
+    void shouldShowMessWithEmptyAllField() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.creditPage();
+        var creditPage = new CreditPage();
+        creditPage.clickProceedButton();
+        creditPage.checkWarningUnderCardNumberField("Неверный формат");
+        creditPage.checkWarningUnderMonthField("Неверный формат");
+        creditPage.checkWarningUnderYearField("Неверный формат");
+        creditPage.checkWarningUnderCardOwnerField("Поле обязательно для заполнения");
+        creditPage.checkWarningUnderCvcField("Неверный формат");
+    }
+
     //    дата с истёкшим сроком действия карты
 
 //    некорректный месяц (например, "19")

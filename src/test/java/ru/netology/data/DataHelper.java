@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class DataHelper {
@@ -34,8 +36,17 @@ public class DataHelper {
         return  new CardInfo(randomCardNumber, "11", "23", randomName, "123");
     }
 
+    public static String currentMonth() {
+        LocalDate date = LocalDate.now();
+        String currentMonth = date.format(DateTimeFormatter.ofPattern("MM"));
+        return currentMonth;
+    }
 
-// generateRandomCard
+    public static String currentYear() {
+        LocalDate date = LocalDate.now();
+        String currentYear = date.format(DateTimeFormatter.ofPattern("yyyy"));
+        return currentYear;
+    }
 
 
     @Value

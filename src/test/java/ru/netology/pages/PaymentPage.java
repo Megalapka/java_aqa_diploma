@@ -5,6 +5,8 @@ import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.*;
 
@@ -47,6 +49,9 @@ public class PaymentPage {
         proceedBtn.click();
     }
 
+    public  void clickProceedButton() {
+        proceedBtn.click();
+    }
     public void checkErrorMessDeclineFromBank() {
         errorMessWithDecline.shouldBe(visible, Duration.ofSeconds(15));
     }
@@ -115,4 +120,8 @@ public class PaymentPage {
         warningCvcField.shouldBe(visible);
         warningCvcField.shouldHave(text(warningText));
     }
+
+
+
+
 }

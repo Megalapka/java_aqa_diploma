@@ -52,6 +52,9 @@ public class CreditPage {
         proceedBtn.click();
     }
 
+    public  void clickProceedButton() {
+        proceedBtn.click();
+    }
     public void checkErrorMessDeclineFromBank() {
         errorMessWithDecline.shouldBe(visible, Duration.ofSeconds(15));
     }
