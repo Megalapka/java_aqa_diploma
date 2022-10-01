@@ -100,7 +100,31 @@ public class PaymentTest {
         paymentPage.checkApprovedMessFromBank();
     }
 
-//    граничные значения срока действия карты "ГОД" (минимум 0 мес, в текущем месяце карта ещё должна быть действительна)
+    @Test
+    @DisplayName("Should approved payment card with approved test card and min date(current month)")
+    void shouldSuccessTransactionWithMinAllowedDate() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear
+                (DataHelper.getCurrentMonth(),DataHelper.getCurrentYear());
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkApprovedMessFromBank();
+    }
+
+    @Test
+    @DisplayName("Should approved payment card with approved test card and min date next month)")
+    void shouldSuccessTransactionWithPreMinAllowedDate() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.paymentPage();
+        var nextMonth = Integer.parseInt(DataHelper.getCurrentMonth()) + 1;
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear
+                (String.valueOf(nextMonth),DataHelper.getCurrentYear());
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkApprovedMessFromBank();
+    }
+
 //    граничные значения по длине имени владельца карты (максимум 21 символ, включая пробел)
 //    граничные значения по длине имени владельца карты (минимум 3 символа, включая пробел) - здесь я уже фантазирую, но мне кажется в этом есть смысл.
 
