@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
 import ru.netology.pages.CreditPage;
 import ru.netology.pages.MainPage;
-import ru.netology.pages.PaymentPage;
 
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
@@ -117,10 +116,27 @@ public class CreditTest {
         creditPage.checkApprovedMessFromBank();
     }
 
-//    граничные значения по длине имени владельца карты (максимум 21 символ, включая пробел)
-//    граничные значения по длине имени владельца карты (минимум 3 символа, включая пробел) - здесь я уже фантазирую, но мне кажется в этом есть смысл.
+    @Test
+    @DisplayName("Should credit payment card with approved test card and max length card owner's name")
+    void shouldSuccessTransactionMaxLengthCardOwnerName() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithMaxLengthCardOwnerName();
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkApprovedMessFromBank();
+    }
 
-
+    @Test
+    @DisplayName("Should approved credit card with approved test card and min length card owner's name")
+    void shouldSuccessTransactionMinLengthCardOwnerName() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithMinLengthCardOwnerName();
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkApprovedMessFromBank();
+    }
 
     @Test
     @DisplayName("Should decline credit card with random test card")

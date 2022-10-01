@@ -13,20 +13,21 @@ public class DataHelper {
     private static Faker faker = new Faker(new Locale("en"));
 
     private static int validYear = Integer.parseInt(getCurrentYear()) + 1;
+    private static String numberApprovedCard = "4444 4444 4444 4441";
+    private static String numberDeclinedCard = "4444 4444 4444 4442";
+
 
     public static CardInfo generateDataWithApprovedCard() {
         var randomName = faker.name().fullName();
         var randomCvc = faker.number().digits(3);
-        return new CardInfo("4444 4444 4444 4441", getCurrentMonth(), String.valueOf(validYear),
-                randomName, randomCvc);
+        return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), randomName, randomCvc);
     }
 
     public static CardInfo generateDataWithDeclineCard() {
 
         var randomName = faker.name().fullName();
         var randomCvc = faker.number().digits(3);
-        return new CardInfo("4444 4444 4444 4442", getCurrentMonth(), String.valueOf(validYear),
-                randomName, randomCvc);
+        return new CardInfo(numberDeclinedCard, getCurrentMonth(), String.valueOf(validYear), randomName, randomCvc);
     }
 
     public static CardInfo generateDataWithRandomCardNumber() {
@@ -39,7 +40,20 @@ public class DataHelper {
     public static CardInfo generateDataWithApprovedCardAndParametrizedMonthAndYear(String month, String year) {
         var randomName = faker.name().fullName();
         var randomCvc = faker.number().digits(3);
-        return  new CardInfo("4444 4444 4444 4441", month, year, randomName, randomCvc);
+        return  new CardInfo(numberApprovedCard, month, year, randomName, randomCvc);
+
+    }
+
+    public static CardInfo generateDataWithMaxLengthCardOwnerName() {
+        var randomMaxName = faker.lorem().fixedString(21);
+        var randomCvc = faker.number().digits(3);
+        return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), randomMaxName, randomCvc);
+    }
+
+    public static CardInfo generateDataWithMinLengthCardOwnerName() {
+        var randomMinName = faker.lorem().fixedString(3);
+        var randomCvc = faker.number().digits(3);
+        return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), randomMinName, randomCvc);
     }
 
     public static String getCurrentMonth() {

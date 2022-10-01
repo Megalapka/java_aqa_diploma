@@ -1,14 +1,16 @@
 package ru.netology.tests;
 
 import com.codeborne.selenide.Configuration;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
-import ru.netology.data.SQLHelper;
 import ru.netology.pages.MainPage;
 import ru.netology.pages.PaymentPage;
+
+import java.util.Locale;
 
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
@@ -29,7 +31,11 @@ public class PaymentTest {
     @Test
     void testMyCode() {
         open("http://localhost:8080/");
-        SQLHelper.cleanDatabase();
+//        SQLHelper.cleanDatabase();
+        Faker faker = new Faker(new Locale("en"));
+        var random = faker.lorem().fixedString(21);
+        var random1 = faker.lorem().fixedString(21);
+        System.out.println(random1);
 
 
     }
@@ -125,9 +131,27 @@ public class PaymentTest {
         paymentPage.checkApprovedMessFromBank();
     }
 
-//    граничные значения по длине имени владельца карты (максимум 21 символ, включая пробел)
-//    граничные значения по длине имени владельца карты (минимум 3 символа, включая пробел) - здесь я уже фантазирую, но мне кажется в этом есть смысл.
+    @Test
+    @DisplayName("Should approved payment card with approved test card and max length card owner's name")
+    void shouldSuccessTransactionMaxLengthCardOwnerName() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithMaxLengthCardOwnerName();
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkApprovedMessFromBank();
+    }
 
+    @Test
+    @DisplayName("Should approved payment card with approved test card and min length card owner's name")
+    void shouldSuccessTransactionMinLengthCardOwnerName() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithMinLengthCardOwnerName();
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkApprovedMessFromBank();
+    }
 
     @Test
     @DisplayName("Should decline payment card with random test card")
