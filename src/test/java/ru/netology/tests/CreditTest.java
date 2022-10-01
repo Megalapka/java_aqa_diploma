@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
 import ru.netology.pages.CreditPage;
 import ru.netology.pages.MainPage;
+import ru.netology.pages.PaymentPage;
 
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
@@ -223,7 +224,43 @@ public class CreditTest {
         creditPage.checkWarningUnderCvcField("Неверный формат");
     }
 
-    //    дата с истёкшим сроком действия карты
+    @Test
+    @DisplayName("Should to show red warning with expired card for year")
+    void shouldShowMessWithExpiredCardForYear() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.creditPage();
+        var currentMonth = DataHelper.getCurrentMonth();
+        var lastYear = Integer.parseInt(DataHelper.getCurrentYear()) - 1;
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(currentMonth,
+                String.valueOf(lastYear));
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkWarningUnderYearField("Истёк срок действия карты");
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with expired card for month")
+    void shouldShowMessWithExpiredCardForMonth() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.creditPage();
+        var currentMonth = Integer.parseInt(DataHelper.getCurrentMonth());
+        var currentYear = Integer.parseInt(DataHelper.getCurrentYear());
+        if (currentMonth == 1) {
+            currentMonth = 12;
+            currentYear = currentYear - 1;
+        } else currentMonth = currentMonth - 1;
+
+        String strCurrentMonth = "";
+        if (currentMonth < 10) {
+            strCurrentMonth = "0" + currentMonth;
+        }
+
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(strCurrentMonth,
+                String.valueOf(currentYear));
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
+    }
 
 //    некорректный месяц (например, "19")
 //    граничные значения срока действия карты "ГОД" (максимум 3 года)
