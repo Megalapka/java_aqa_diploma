@@ -239,8 +239,44 @@ public class PaymentTest {
         paymentPage.checkWarningUnderCvcField("Неверный формат");
     }
 
+    @Test
+    @DisplayName("Should to show red warning with expired card for year")
+    void shouldShowMessWithExpiredCardForYear() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.paymentPage();
+        var currentMonth = DataHelper.getCurrentMonth();
+        var lastYear = Integer.parseInt(DataHelper.getCurrentYear()) - 1;
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(currentMonth,
+                String.valueOf(lastYear));
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkWarningUnderYearField("Истёк срок действия карты");
+    }
 
-//    дата с истёкшим сроком действия карты
+    @Test
+    @DisplayName("Should to show red warning with expired card for month")
+    void shouldShowMessWithExpiredCardForMonth() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.paymentPage();
+        var currentMonth = Integer.parseInt(DataHelper.getCurrentMonth());
+        var currentYear = Integer.parseInt(DataHelper.getCurrentYear());
+        if (currentMonth == 1) {
+            currentMonth = 12;
+            currentYear = currentYear - 1;
+        } else currentMonth = currentMonth - 1;
+
+        String strCurrentMonth = "";
+        if (currentMonth < 10) {
+            strCurrentMonth = "0" + currentMonth;
+        }
+
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(strCurrentMonth,
+                String.valueOf(currentYear));
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
+    }
+
 //    некорректный месяц (например, "78")
 //    граничные значения срока действия карты "ГОД" (максимум 5 лет)
 //    граничные значения срока действия карты "ГОД" (минимум 0 мес, в текущем месяце карта ещё должна быть действительна)
