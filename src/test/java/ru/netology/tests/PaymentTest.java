@@ -277,11 +277,26 @@ public class PaymentTest {
         paymentPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
     }
 
-//    некорректный месяц (например, "78")
+    @Test
+    @DisplayName("Should to show red warning with invalid month data")
+    void shouldShowMessWithInvalidMonthData() {
+        var mainPage = open("http://localhost:8080/", MainPage.class);
+        mainPage.paymentPage();
+        var currentYear = DataHelper.getCurrentYear();
+
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear("78",
+                currentYear);
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
+    }
+
 //    граничные значения срока действия карты "ГОД" (максимум 5 лет)
 //    граничные значения срока действия карты "ГОД" (минимум 0 мес, в текущем месяце карта ещё должна быть действительна)
 //    граничные значения по длине имени владельца карты (максимум 21 символ, включая пробел)
 //    граничные значения по длине имени владельца карты (минимум 3 символа, включая пробел)
-
+//    ввод в поле "Владелец" имя на кирилице
+//    ввод в поле "Владелец" цифры
+//    ввод в поле "Владелец" спецсимволы
 
 }
