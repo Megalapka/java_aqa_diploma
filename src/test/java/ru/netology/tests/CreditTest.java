@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
 import ru.netology.pages.CreditPage;
 import ru.netology.pages.MainPage;
-import ru.netology.pages.PaymentPage;
+
 
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
@@ -122,7 +122,7 @@ public class CreditTest {
     void shouldSuccessTransactionMaxLengthCardOwnerName() {
         var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
-        var cardInfo = DataHelper.generateDataWithMaxLengthCardOwnerName();
+        var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(21);
         var creditPage = new CreditPage();
         creditPage.insertValidCreditCardDataForBank(cardInfo);
         creditPage.checkApprovedMessFromBank();
@@ -133,7 +133,7 @@ public class CreditTest {
     void shouldSuccessTransactionMinLengthCardOwnerName() {
         var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
-        var cardInfo = DataHelper.generateDataWithMinLengthCardOwnerName();
+        var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(3);
         var creditPage = new CreditPage();
         creditPage.insertValidCreditCardDataForBank(cardInfo);
         creditPage.checkApprovedMessFromBank();
@@ -275,8 +275,6 @@ public class CreditTest {
         creditPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
     }
 
-//    граничные значения срока действия карты "ГОД" (максимум 3 года)
-//    граничные значения срока действия карты "ГОД" (минимум 0 мес, в текущем месяце карта ещё должна быть действительна)
 //    граничные значения по длине имени владельца карты (максимум 21 символ, включая пробел)
 //    граничные значения по длине имени владельца карты (минимум 3 символа, включая пробел)
 //    ввод в поле "Владелец" имя на кирилице

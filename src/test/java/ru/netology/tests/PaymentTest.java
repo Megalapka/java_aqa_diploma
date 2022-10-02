@@ -1,7 +1,7 @@
 package ru.netology.tests;
 
 import com.codeborne.selenide.Configuration;
-import com.github.javafaker.Faker;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +10,7 @@ import ru.netology.data.DataHelper;
 import ru.netology.pages.MainPage;
 import ru.netology.pages.PaymentPage;
 
-import java.util.Locale;
+
 
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
@@ -30,12 +30,12 @@ public class PaymentTest {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Test
     void testMyCode() {
-        open("http://localhost:8080/");
+//        open("http://localhost:8080/");
 //        SQLHelper.cleanDatabase();
-        Faker faker = new Faker(new Locale("en"));
-        var random = faker.lorem().fixedString(21);
-        var random1 = faker.lorem().fixedString(21);
-        System.out.println(random1);
+//        Faker faker = new Faker(new Locale("en"));
+//        var random = faker.lorem().fixedString(21);
+//        var random1 = faker.lorem().fixedString(21);
+//        System.out.println(random1);
 
 
     }
@@ -136,7 +136,7 @@ public class PaymentTest {
     void shouldSuccessTransactionMaxLengthCardOwnerName() {
         var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
-        var cardInfo = DataHelper.generateDataWithMaxLengthCardOwnerName();
+        var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(21);
         var paymentPage = new PaymentPage();
         paymentPage.insertValidPaymentCardDataForBank(cardInfo);
         paymentPage.checkApprovedMessFromBank();
@@ -147,7 +147,7 @@ public class PaymentTest {
     void shouldSuccessTransactionMinLengthCardOwnerName() {
         var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
-        var cardInfo = DataHelper.generateDataWithMinLengthCardOwnerName();
+        var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(3);
         var paymentPage = new PaymentPage();
         paymentPage.insertValidPaymentCardDataForBank(cardInfo);
         paymentPage.checkApprovedMessFromBank();

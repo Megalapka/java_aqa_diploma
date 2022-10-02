@@ -44,17 +44,17 @@ public class DataHelper {
 
     }
 
-    public static CardInfo generateDataWithMaxLengthCardOwnerName() {
-        var randomMaxName = faker.lorem().fixedString(21);
+    public static CardInfo generateDataWithParamLengthCardOwnerName(int length) {
+        var randomName = faker.lorem().fixedString(length);
         var randomCvc = faker.number().digits(3);
-        return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), randomMaxName, randomCvc);
+        return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), randomName, randomCvc);
     }
 
-    public static CardInfo generateDataWithMinLengthCardOwnerName() {
-        var randomMinName = faker.lorem().fixedString(3);
-        var randomCvc = faker.number().digits(3);
-        return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), randomMinName, randomCvc);
-    }
+//    public static CardInfo generateDataWithMinLengthCardOwnerName() {
+//        var randomMinName = faker.lorem().fixedString(3);
+//        var randomCvc = faker.number().digits(3);
+//        return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), randomMinName, randomCvc);
+//    }
 
     public static String getCurrentMonth() {
         LocalDate date = LocalDate.now();
