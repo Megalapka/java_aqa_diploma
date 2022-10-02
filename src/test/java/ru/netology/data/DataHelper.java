@@ -50,11 +50,10 @@ public class DataHelper {
         return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), randomName, randomCvc);
     }
 
-//    public static CardInfo generateDataWithMinLengthCardOwnerName() {
-//        var randomMinName = faker.lorem().fixedString(3);
-//        var randomCvc = faker.number().digits(3);
-//        return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), randomMinName, randomCvc);
-//    }
+    public static CardInfo generateDataWithParamCardOwnerName(String name) {
+        var randomCvc = faker.number().digits(3);
+        return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), name, randomCvc);
+    }
 
     public static String getCurrentMonth() {
         LocalDate date = LocalDate.now();

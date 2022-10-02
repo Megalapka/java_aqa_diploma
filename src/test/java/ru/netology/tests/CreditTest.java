@@ -10,10 +10,14 @@ import ru.netology.pages.CreditPage;
 import ru.netology.pages.MainPage;
 
 
+
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
 
 public class CreditTest {
+
+    MainPage mainPage = open("http://localhost:8080/", MainPage.class);
+
 
     @BeforeEach
     void setUP() {
@@ -29,7 +33,7 @@ public class CreditTest {
     @Test
     @DisplayName("Should approved credit card with approved test card")
     void shouldSuccessTransactionWithCreditCard() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
+        //var mainPage = open("http://localhost:8080/", MainPage.class);
 
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
@@ -42,8 +46,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should decline credit card with declined test card")
     void shouldNotSuccessTransactionWithCreditCard() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithDeclineCard();
         var creditPage = new CreditPage();
@@ -54,7 +56,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should approved credit card with approved test card and max date")
     void shouldSuccessTransactionWithMaxAllowedDate() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var currentMonth = DataHelper.getCurrentMonth();
         var maxYear = Integer.parseInt(DataHelper.getCurrentYear()) + 5;
@@ -69,7 +70,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should approved credit card with approved test card and max date minus 1 month")
     void shouldSuccessTransactionWithPreMaxAllowedDate() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var currentMonth = Integer.parseInt(DataHelper.getCurrentMonth());
         var preMaxMonth = 0;
@@ -95,7 +95,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should approved credit card with approved test card and min date(current month)")
     void shouldSuccessTransactionWithMinAllowedDate() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear
                 (DataHelper.getCurrentMonth(),DataHelper.getCurrentYear());
@@ -107,7 +106,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should approved credit card with approved test card and min date next month)")
     void shouldSuccessTransactionWithPreMinAllowedDate() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var nextMonth = Integer.parseInt(DataHelper.getCurrentMonth()) + 1;
         var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear
@@ -120,7 +118,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should credit payment card with approved test card and max length card owner's name")
     void shouldSuccessTransactionMaxLengthCardOwnerName() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(21);
         var creditPage = new CreditPage();
@@ -131,7 +128,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should approved credit card with approved test card and min length card owner's name")
     void shouldSuccessTransactionMinLengthCardOwnerName() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(3);
         var creditPage = new CreditPage();
@@ -142,7 +138,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should decline credit card with random test card")
     void shouldDeclineWithRandomCreditCard() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithRandomCardNumber();
         var creditPage = new CreditPage();
@@ -153,8 +148,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should to show red warning with empty card number field")
     void shouldShowMessWithEmptyCardNumberField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var creditPage = new CreditPage();
@@ -165,8 +158,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should to show red warning with empty month field")
     void shouldShowMessWithEmptyMonthField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var creditPage = new CreditPage();
@@ -177,8 +168,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should to show red warning with empty year field")
     void shouldShowMessWithEmptyYearField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var creditPage = new CreditPage();
@@ -189,8 +178,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should to show red warning with empty card owner field")
     void shouldShowMessWithEmptyCardOwnerField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var creditPage = new CreditPage();
@@ -201,8 +188,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should to show red warning with empty cvc field")
     void shouldShowMessWithEmptyCvcField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var creditPage = new CreditPage();
@@ -213,7 +198,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should to show red warning with empty all field")
     void shouldShowMessWithEmptyAllField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var creditPage = new CreditPage();
         creditPage.clickProceedButton();
@@ -227,7 +211,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should to show red warning with expired card for year")
     void shouldShowMessWithExpiredCardForYear() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var currentMonth = DataHelper.getCurrentMonth();
         var lastYear = Integer.parseInt(DataHelper.getCurrentYear()) - 1;
@@ -241,7 +224,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should to show red warning with expired card for month")
     void shouldShowMessWithExpiredCardForMonth() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var currentMonth = Integer.parseInt(DataHelper.getCurrentMonth());
         var currentYear = Integer.parseInt(DataHelper.getCurrentYear());
@@ -265,7 +247,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should to show red warning with invalid month data")
     void shouldShowMessWithInvalidMonthData() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.creditPage();
         var currentYear = DataHelper.getCurrentYear();
         var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear("19",
@@ -275,9 +256,52 @@ public class CreditTest {
         creditPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
     }
 
-//    граничные значения по длине имени владельца карты (максимум 21 символ, включая пробел)
-//    граничные значения по длине имени владельца карты (минимум 3 символа, включая пробел)
-//    ввод в поле "Владелец" имя на кирилице
-//    ввод в поле "Владелец" цифры
-//    ввод в поле "Владелец" спецсимволы
+    @Test
+    @DisplayName("Should o show red warning with more max length card owner's name by one char")
+    void shouldShowMessWithMoreMaxLengthCardOwnerName() {
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(22);
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkWarningUnderCardOwnerField("Имя не должно быть длинее 21 символа");
+    }
+
+    @Test
+    @DisplayName("Should o show red warning with less min length card owner's name by one char")
+    void shouldShowMessWithLessMinLengthCardOwnerName() {
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(2);
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkWarningUnderCardOwnerField("Имя не должно быть короче 3 символов");
+    }
+    @Test
+    @DisplayName("Should o show red warning with card owner's name is written in Cyrillic")
+    void shouldShowMessWithCyrillicCardOwnerName() {
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithParamCardOwnerName("ИВАНОВ ФЁДОР");
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkWarningUnderCardOwnerField("Неверный формат");
+    }
+
+    @Test
+    @DisplayName("Should o show red warning with card owner's name with numbers")
+    void shouldShowMessWithNumbersCardOwnerName() {
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithParamCardOwnerName("ИВАН08456 ФЁДОР");
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkWarningUnderCardOwnerField("Неверный формат");
+    }
+
+    @Test
+    @DisplayName("Should o show red warning with card owner's name with special characters")
+    void shouldShowMessWithSpecCharactersCardOwnerName() {
+        mainPage.creditPage();
+        var cardInfo = DataHelper.generateDataWithParamCardOwnerName("@#%$^$%&>??<");
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkWarningUnderCardOwnerField("Неверный формат");
+    }
 }

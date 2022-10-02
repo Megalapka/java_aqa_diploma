@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
+import ru.netology.data.SQLHelper;
 import ru.netology.pages.MainPage;
 import ru.netology.pages.PaymentPage;
 
@@ -16,6 +17,8 @@ import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
 
 public class PaymentTest {
+
+    MainPage mainPage = open("http://localhost:8080/", MainPage.class);
 
     @BeforeEach
     void setUP() {
@@ -30,8 +33,8 @@ public class PaymentTest {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Test
     void testMyCode() {
-//        open("http://localhost:8080/");
-//        SQLHelper.cleanDatabase();
+        open("http://localhost:8080/");
+        SQLHelper.cleanDatabase();
 //        Faker faker = new Faker(new Locale("en"));
 //        var random = faker.lorem().fixedString(21);
 //        var random1 = faker.lorem().fixedString(21);
@@ -44,8 +47,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should approved payment card with approved test card")
     void shouldSuccessTransactionWithPaymentCard() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var paymentPage = new PaymentPage();
@@ -57,8 +58,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should decline payment card with declined test card")
     void shouldNotSuccessTransactionWithPaymentCard() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithDeclineCard();
         var paymentPage = new PaymentPage();
@@ -69,7 +68,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should approved payment card with approved test card and max date")
     void shouldSuccessTransactionWithMaxAllowedDate() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
         var currentMonth = DataHelper.getCurrentMonth();
         var maxYear = Integer.parseInt(DataHelper.getCurrentYear()) + 5;
@@ -83,7 +81,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should approved payment card with approved test card and max date minus 1 month")
     void shouldSuccessTransactionWithPreMaxAllowedDate() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
         var currentMonth = Integer.parseInt(DataHelper.getCurrentMonth());
         var preMaxMonth = 0;
@@ -109,7 +106,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should approved payment card with approved test card and min date(current month)")
     void shouldSuccessTransactionWithMinAllowedDate() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear
                 (DataHelper.getCurrentMonth(),DataHelper.getCurrentYear());
@@ -121,7 +117,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should approved payment card with approved test card and min date next month)")
     void shouldSuccessTransactionWithPreMinAllowedDate() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
         var nextMonth = Integer.parseInt(DataHelper.getCurrentMonth()) + 1;
         var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear
@@ -134,7 +129,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should approved payment card with approved test card and max length card owner's name")
     void shouldSuccessTransactionMaxLengthCardOwnerName() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(21);
         var paymentPage = new PaymentPage();
@@ -145,7 +139,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should approved payment card with approved test card and min length card owner's name")
     void shouldSuccessTransactionMinLengthCardOwnerName() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(3);
         var paymentPage = new PaymentPage();
@@ -156,8 +149,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should decline payment card with random test card")
     void shouldDeclineWithRandomPaymentCard() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithRandomCardNumber();
         var paymentPage = new PaymentPage();
@@ -168,8 +159,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should to show red warning with empty card number field")
     void shouldShowMessWithEmptyCardNumberField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var paymentPage = new PaymentPage();
@@ -180,8 +169,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should to show red warning with empty month field")
     void shouldShowMessWithEmptyMonthField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var paymentPage = new PaymentPage();
@@ -192,8 +179,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should to show red warning with empty year field")
     void shouldShowMessWithEmptyYearField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var paymentPage = new PaymentPage();
@@ -204,8 +189,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should to show red warning with empty card owner field")
     void shouldShowMessWithEmptyCardOwnerField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var paymentPage = new PaymentPage();
@@ -216,8 +199,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should to show red warning with empty cvc field")
     void shouldShowMessWithEmptyCvcField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var paymentPage = new PaymentPage();
@@ -228,7 +209,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should to show red warning with empty all field")
     void shouldShowMessWithEmptyAllField() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
         var paymentPage = new PaymentPage();
         paymentPage.clickProceedButton();
@@ -242,7 +222,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should to show red warning with expired card for year")
     void shouldShowMessWithExpiredCardForYear() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
         var currentMonth = DataHelper.getCurrentMonth();
         var lastYear = Integer.parseInt(DataHelper.getCurrentYear()) - 1;
@@ -256,7 +235,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should to show red warning with expired card for month")
     void shouldShowMessWithExpiredCardForMonth() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
         var currentMonth = Integer.parseInt(DataHelper.getCurrentMonth());
         var currentYear = Integer.parseInt(DataHelper.getCurrentYear());
@@ -280,7 +258,6 @@ public class PaymentTest {
     @Test
     @DisplayName("Should to show red warning with invalid month data")
     void shouldShowMessWithInvalidMonthData() {
-        var mainPage = open("http://localhost:8080/", MainPage.class);
         mainPage.paymentPage();
         var currentYear = DataHelper.getCurrentYear();
 
@@ -291,12 +268,54 @@ public class PaymentTest {
         paymentPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
     }
 
-//    граничные значения срока действия карты "ГОД" (максимум 5 лет)
-//    граничные значения срока действия карты "ГОД" (минимум 0 мес, в текущем месяце карта ещё должна быть действительна)
-//    граничные значения по длине имени владельца карты (максимум 21 символ, включая пробел)
-//    граничные значения по длине имени владельца карты (минимум 3 символа, включая пробел)
-//    ввод в поле "Владелец" имя на кирилице
-//    ввод в поле "Владелец" цифры
-//    ввод в поле "Владелец" спецсимволы
+    @Test
+    @DisplayName("Should o show red warning with more max length card owner's name by one char")
+    void shouldShowMessWithMoreMaxLengthCardOwnerName() {
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(22);
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkWarningUnderCardOwnerField("Имя не должно быть длинее 21 символа");
+    }
+
+    @Test
+    @DisplayName("Should o show red warning with less min length card owner's name by one char")
+    void shouldShowMessWithLessMinLengthCardOwnerName() {
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithParamLengthCardOwnerName(2);
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkWarningUnderCardOwnerField("Имя не должно быть короче 3 символов");
+    }
+
+    @Test
+    @DisplayName("Should o show red warning with card owner's name is written in Cyrillic")
+    void shouldShowMessWithCyrillicCardOwnerName() {
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithParamCardOwnerName("ИВАНОВ ФЁДОР");
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkWarningUnderCardOwnerField("Неверный формат");
+    }
+
+    @Test
+    @DisplayName("Should o show red warning with card owner's name with numbers")
+    void shouldShowMessWithNumbersCardOwnerName() {
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithParamCardOwnerName("ИВАН08456 ФЁДОР");
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkWarningUnderCardOwnerField("Неверный формат");
+    }
+
+    @Test
+    @DisplayName("Should o show red warning with card owner's name with special characters")
+    void shouldShowMessWithSpecCharactersCardOwnerName() {
+        mainPage.paymentPage();
+        var cardInfo = DataHelper.generateDataWithParamCardOwnerName("@#%$^$%&>??<");
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkWarningUnderCardOwnerField("Неверный формат");
+    }
 
 }
