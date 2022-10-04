@@ -255,6 +255,18 @@ public class PaymentTest {
     }
 
     @Test
+    @DisplayName("Should to show red warning with 00 month")
+    void shouldShowMessWithZeroZeroMonth() {
+        mainPage.paymentPage();
+        var validYear = Integer.parseInt(DataHelper.getCurrentYear()) + 1;
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear
+                ("00", String.valueOf(validYear));
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
+    }
+
+    @Test
     @DisplayName("Should to show red warning with invalid month data")
     void shouldShowMessWithInvalidMonthData() {
         mainPage.paymentPage();

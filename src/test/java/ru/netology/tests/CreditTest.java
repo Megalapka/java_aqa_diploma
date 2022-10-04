@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
 import ru.netology.pages.CreditPage;
 import ru.netology.pages.MainPage;
-
+import ru.netology.pages.PaymentPage;
 
 
 import static com.codeborne.selenide.Selenide.closeWindow;
@@ -248,6 +248,18 @@ public class CreditTest {
 
         var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(strCurrentMonth,
                 String.valueOf(currentYear));
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
+    }
+
+    @Test
+    @DisplayName("Should to show red warning with 00 month")
+    void shouldShowMessWithZeroZeroMonth() {
+        mainPage.creditPage();
+        var validYear = Integer.parseInt(DataHelper.getCurrentYear()) + 1;
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear
+                ("00", String.valueOf(validYear));
         var creditPage = new CreditPage();
         creditPage.insertValidCreditCardDataForBank(cardInfo);
         creditPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
