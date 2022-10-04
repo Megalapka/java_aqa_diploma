@@ -33,8 +33,6 @@ public class CreditTest {
     @Test
     @DisplayName("Should approved credit card with approved test card")
     void shouldSuccessTransactionWithCreditCard() {
-        //var mainPage = open("http://localhost:8080/", MainPage.class);
-
         mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
         var creditPage = new CreditPage();
@@ -53,6 +51,17 @@ public class CreditTest {
         creditPage.checkErrorMessDeclineFromBank();
     }
 
+    @Test
+    @DisplayName("Should approved credit card with month by one digit")
+    void shouldSuccessTransactionWithMonthWithoutZero() {
+        mainPage.creditPage();
+        var validYear = Integer.parseInt(DataHelper.getCurrentYear()) + 1;
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear
+                ("5", String.valueOf(validYear));
+        var creditPage = new CreditPage();
+        creditPage.insertValidCreditCardDataForBank(cardInfo);
+        creditPage.checkApprovedMessFromBank();
+    }
     @Test
     @DisplayName("Should approved credit card with approved test card and max date")
     void shouldSuccessTransactionWithMaxAllowedDate() {

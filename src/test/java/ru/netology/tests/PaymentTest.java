@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DataHelper;
 import ru.netology.data.SQLHelper;
+import ru.netology.pages.CreditPage;
 import ru.netology.pages.MainPage;
 import ru.netology.pages.PaymentPage;
 
@@ -30,20 +31,6 @@ public class PaymentTest {
         closeWindow();
     }
 
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    @Test
-    void testMyCode() {
-        open("http://localhost:8080/");
-        SQLHelper.cleanDatabase();
-//        Faker faker = new Faker(new Locale("en"));
-//        var random = faker.lorem().fixedString(21);
-//        var random1 = faker.lorem().fixedString(21);
-//        System.out.println(random1);
-
-
-    }
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
     @Test
     @DisplayName("Should approved payment card with approved test card")
     void shouldSuccessTransactionWithPaymentCard() {
@@ -63,6 +50,18 @@ public class PaymentTest {
         var paymentPage = new PaymentPage();
         paymentPage.insertValidPaymentCardDataForBank(cardInfo);
         paymentPage.checkErrorMessDeclineFromBank();
+    }
+
+    @Test
+    @DisplayName("Should approved payment card with month by one digit")
+    void shouldSuccessTransactionWithMonthWithoutZero() {
+        mainPage.paymentPage();
+        var validYear = Integer.parseInt(DataHelper.getCurrentYear()) + 1;
+        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear
+                ("5", String.valueOf(validYear));
+        var paymentPage = new PaymentPage();
+        paymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        paymentPage.checkApprovedMessFromBank();
     }
 
     @Test
