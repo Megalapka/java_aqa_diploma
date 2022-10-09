@@ -1,7 +1,6 @@
 package ru.netology.data;
 
 import com.github.javafaker.Faker;
-import com.google.protobuf.StringValue;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -53,6 +52,44 @@ public class DataHelper {
     public static CardInfo generateDataWithParamCardOwnerName(String name) {
         var randomCvc = faker.number().digits(3);
         return new CardInfo(numberApprovedCard, getCurrentMonth(), String.valueOf(validYear), name, randomCvc);
+    }
+
+    public static CardInfo generateDataExpiredCardForOneMonth() {
+        var randomName = faker.name().fullName();
+        var randomCvc = faker.number().digits(3);
+        var currentMonth = Integer.parseInt(getCurrentMonth());
+        var currentYear = Integer.parseInt(getCurrentYear());
+        if (currentMonth == 1) {
+            currentMonth = 12;
+            currentYear = currentYear - 1;
+        } else currentMonth = currentMonth - 1;
+
+        String minusOneFromCurrentMonth = "";
+        if (currentMonth < 10) {
+            minusOneFromCurrentMonth = "0" + currentMonth;
+        }
+        return  new CardInfo(numberApprovedCard, minusOneFromCurrentMonth,
+                String.valueOf(currentYear), randomName, randomCvc);
+    }
+
+    public static CardInfo generateDataWithMaxDateMinusOneMonth() {
+        var randomName = faker.name().fullName();
+        var randomCvc = faker.number().digits(3);
+        var currentMonth = Integer.parseInt(getCurrentMonth());
+        var preMaxMonth = 0;
+        var maxYear = Integer.parseInt(getCurrentYear()) + 5;
+
+        if (currentMonth == 1) {
+            preMaxMonth = 12;
+            maxYear = maxYear - 1;
+        } else preMaxMonth = currentMonth - 1;
+
+        String strPreMaxMonth = "";
+        if (preMaxMonth < 10) {
+            strPreMaxMonth = "0" + preMaxMonth;
+        }
+        return  new CardInfo(numberApprovedCard, strPreMaxMonth,
+                String.valueOf(maxYear), randomName, randomCvc);
     }
 
     public static String getCurrentMonth() {

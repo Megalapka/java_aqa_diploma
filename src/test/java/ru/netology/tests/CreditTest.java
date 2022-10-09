@@ -74,22 +74,7 @@ public class CreditTest {
     @DisplayName("Should approved credit card with approved test card and max date minus 1 month")
     void shouldSuccessTransactionWithPreMaxAllowedDate() {
         var toCreditPage = mainPage.creditPage();
-        var currentMonth = Integer.parseInt(DataHelper.getCurrentMonth());
-        var preMaxMonth = 0;
-        var maxYear = Integer.parseInt(DataHelper.getCurrentYear()) + 5;
-
-        if (currentMonth == 1) {
-            preMaxMonth = 12;
-            maxYear = maxYear - 1;
-        } else preMaxMonth = currentMonth - 1;
-
-        String strPreMaxMonth = "";
-        if (preMaxMonth < 10) {
-            strPreMaxMonth = "0" + preMaxMonth;
-        }
-
-        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(strPreMaxMonth,
-                String.valueOf(maxYear));
+        var cardInfo = DataHelper.generateDataWithMaxDateMinusOneMonth();
         toCreditPage.insertValidCreditCardDataForBank(cardInfo);
         toCreditPage.checkApprovedMessFromBank();
     }
@@ -215,20 +200,7 @@ public class CreditTest {
     @DisplayName("Should to show red warning with expired card for month")
     void shouldShowMessWithExpiredCardForMonth() {
         var toCreditPage = mainPage.creditPage();
-        var currentMonth = Integer.parseInt(DataHelper.getCurrentMonth());
-        var currentYear = Integer.parseInt(DataHelper.getCurrentYear());
-        if (currentMonth == 1) {
-            currentMonth = 12;
-            currentYear = currentYear - 1;
-        } else currentMonth = currentMonth - 1;
-
-        String strCurrentMonth = "";
-        if (currentMonth < 10) {
-            strCurrentMonth = "0" + currentMonth;
-        }
-
-        var cardInfo = DataHelper.generateDataWithApprovedCardAndParametrizedMonthAndYear(strCurrentMonth,
-                String.valueOf(currentYear));
+        var cardInfo = DataHelper.generateDataExpiredCardForOneMonth();
         toCreditPage.insertValidCreditCardDataForBank(cardInfo);
         toCreditPage.checkWarningUnderMonthField("Неверно указан срок действия карты");
     }
