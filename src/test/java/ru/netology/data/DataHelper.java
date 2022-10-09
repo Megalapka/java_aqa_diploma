@@ -67,7 +67,9 @@ public class DataHelper {
         return currentYear;
     }
 
-    @Value
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class CardInfo {
         String cardNumber;
         String month;
