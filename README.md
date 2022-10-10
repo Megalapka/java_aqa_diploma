@@ -10,15 +10,24 @@
 
 1. Перейти в папку `java_aqa_diploma`
 
-1. Запустить контейнер Docker командой в консоли 
-(_позже разберусь с контейнером для postgres_):
-`docker-compose up`
+1. Запустить контейнер Docker командой в консоли:
+>`docker-compose up`
 
-1. Запустить приложение командой в консоли:
-`java -jar artifacts/aqa-shop.jar`
+1. Запустить приложение командой в консоли
 
-1. Запустить авто-тесты команой в консоли: 
-`./gradlew test`
+ *для MySQL*:
+> `java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar`
+ 
+ *для PostgreSQL*:
+> `java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar`
 
-1. После выполнения всех тестов остановить docker контейнер командой в консоли: 
+5. Запустить авто-тесты команой в консоли 
+
+*для MySQL*:
+> `./gradlew test "-Ddb.url=jdbc:mysql://localhost:3306/app"`
+
+*для PostgreSQL*:
+> `./gradlew test "-Ddb.url=jdbc:postgresql://localhost:5432/app"`
+
+6. После выполнения всех тестов остановить docker контейнер командой в консоли: 
 `docker-compose down`
