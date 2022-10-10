@@ -48,6 +48,19 @@ public class SQLHelper {
         return null;
     }
 
+    public static DataHelper.TableOrderEntity getTableOrderEntity() {
+        var orderEntityDataSQL =  "SELECT * FROM order_entity ORDER BY created DESC LIMIT 1";
+        try (var conn = getConn()) {
+            var result = runner.query(conn, orderEntityDataSQL,
+                    new BeanHandler<>(DataHelper.TableOrderEntity.class));
+            return result;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null;
+    }
+
+
     @SneakyThrows
     public static void cleanDatabase() {
         var conn = getConn();

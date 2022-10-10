@@ -136,4 +136,14 @@ public class DataHelper {
         private String status;
         private String transaction_id; //пока будем брать данные из поля transaction_id вместо id
     }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TableOrderEntity {
+        private String id;
+        private String created;
+        private String credit_id;
+        private String payment_id;
+    }
 }

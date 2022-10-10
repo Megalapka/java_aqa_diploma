@@ -185,6 +185,23 @@ public class PaymentTest {
     }
 
     @Test
+    @DisplayName("Should not to show red warning with empty all field after filled field")
+    void shouldNotShowMessAfterEmptyAllField() {
+        var toPaymentPage = mainPage.paymentPage();
+        toPaymentPage.clickProceedButton();
+        toPaymentPage.checkWarningUnderCardNumberField("Неверный формат");
+        toPaymentPage.checkWarningUnderMonthField("Неверный формат");
+        toPaymentPage.checkWarningUnderYearField("Неверный формат");
+        toPaymentPage.checkWarningUnderCardOwnerField("Поле обязательно для заполнения");
+        toPaymentPage.checkWarningUnderCvcField("Неверный формат");
+
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        toPaymentPage.insertValidPaymentCardDataForBank(cardInfo);
+        toPaymentPage.checkApprovedMessFromBank();
+        toPaymentPage.notCheckWarningUnderAllFields();
+    }
+
+    @Test
     @DisplayName("Should to show red warning with expired card for year")
     void shouldShowMessWithExpiredCardForYear() {
         var toPaymentPage = mainPage.paymentPage();

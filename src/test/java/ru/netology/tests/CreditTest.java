@@ -185,6 +185,23 @@ public class CreditTest {
     }
 
     @Test
+    @DisplayName("Should not to show red warning with empty all field after filled field")
+    void shouldNotShowMessAfterEmptyAllField() {
+        var toCreditPage = mainPage.creditPage();
+        toCreditPage.clickProceedButton();
+        toCreditPage.checkWarningUnderCardNumberField("Неверный формат");
+        toCreditPage.checkWarningUnderMonthField("Неверный формат");
+        toCreditPage.checkWarningUnderYearField("Неверный формат");
+        toCreditPage.checkWarningUnderCardOwnerField("Поле обязательно для заполнения");
+        toCreditPage.checkWarningUnderCvcField("Неверный формат");
+
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        toCreditPage.insertValidCreditCardDataForBank(cardInfo);
+        toCreditPage.checkApprovedMessFromBank();
+        toCreditPage.notCheckWarningUnderAllFields();
+    }
+
+    @Test
     @DisplayName("Should to show red warning with expired card for year")
     void shouldShowMessWithExpiredCardForYear() {
         var toCreditPage = mainPage.creditPage();

@@ -124,4 +124,12 @@ public class CreditPage {
         warningCvcField.shouldBe(visible);
         warningCvcField.shouldHave(text(warningText));
     }
+
+    public void notCheckWarningUnderAllFields() {
+        warningCardNumberField.shouldNotBe(visible);
+        warningMonthField.shouldNotBe(visible);
+        warningYearField.shouldNotBe(visible);
+        warningCardOwnerField.shouldNotBe(visible);
+        warningCvcField.shouldNotBe(visible);
+    }
 }
