@@ -56,70 +56,38 @@ public class CreditPage {
         proceedBtn.click();
     }
     public void checkErrorMessDeclineFromBank() {
-        errorMessWithDecline.shouldBe(visible, Duration.ofSeconds(15));
+        errorMessWithDecline.shouldBe(visible, Duration.ofSeconds(10));
     }
 
     public void checkApprovedMessFromBank() {
-        approvedMess.shouldBe(visible, Duration.ofSeconds(15));
+        approvedMess.shouldBe(visible, Duration.ofSeconds(10));
     }
 
-
-    public void insertCreditCardDataWithEmptyCardNumberField(DataHelper.CardInfo cardInfo) {
-        monthField.setValue(cardInfo.getMonth());
-        yearField.setValue(cardInfo.getYear());
-        cardOwnerField.setValue(cardInfo.getCardOwner());
-        cvcField.setValue(cardInfo.getCvc());
-        proceedBtn.click();
-    }
 
     public void checkWarningUnderCardNumberField(String warningText) {
         warningCardNumberField.shouldBe(visible);
         warningCardNumberField.shouldHave(text(warningText));
     }
 
-    public void insertCreditCardDataWithEmptyMonthField(DataHelper.CardInfo cardInfo) {
-        cardNumberField.setValue(cardInfo.getCardNumber());
-        yearField.setValue(cardInfo.getYear());
-        cardOwnerField.setValue(cardInfo.getCardOwner());
-        cvcField.setValue(cardInfo.getCvc());
-        proceedBtn.click();
-    }
+
     public void checkWarningUnderMonthField(String warningText) {
         warningMonthField.shouldBe(visible);
         warningMonthField.shouldHave(text(warningText));
     }
 
-    public void insertCreditCardDataWithEmptyYearField(DataHelper.CardInfo cardInfo) {
-        cardNumberField.setValue(cardInfo.getCardNumber());
-        monthField.setValue(cardInfo.getMonth());
-        cardOwnerField.setValue(cardInfo.getCardOwner());
-        cvcField.setValue(cardInfo.getCvc());
-        proceedBtn.click();
-    }
+
     public void checkWarningUnderYearField(String warningText) {
         warningYearField.shouldBe(visible);
         warningYearField.shouldHave(text(warningText));
     }
 
-    public void insertCreditCardDataWithEmptyCardOwnerField(DataHelper.CardInfo cardInfo) {
-        cardNumberField.setValue(cardInfo.getCardNumber());
-        monthField.setValue(cardInfo.getMonth());
-        yearField.setValue(cardInfo.getYear());
-        cvcField.setValue(cardInfo.getCvc());
-        proceedBtn.click();
-    }
+
     public void checkWarningUnderCardOwnerField(String warningText) {
         warningCardOwnerField.shouldBe(visible);
         warningCardOwnerField.shouldHave(text(warningText));
     }
 
-    public void insertCreditCardDataWithEmptyCvcField(DataHelper.CardInfo cardInfo) {
-        cardNumberField.setValue(cardInfo.getCardNumber());
-        monthField.setValue(cardInfo.getMonth());
-        yearField.setValue(cardInfo.getYear());
-        cardOwnerField.setValue(cardInfo.getCardOwner());
-        proceedBtn.click();
-    }
+
     public void checkWarningUnderCvcField(String warningText) {
         warningCvcField.shouldBe(visible);
         warningCvcField.shouldHave(text(warningText));

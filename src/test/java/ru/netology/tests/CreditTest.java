@@ -132,7 +132,8 @@ public class CreditTest {
     void shouldShowMessWithEmptyCardNumberField() {
         var toCreditPage = mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        toCreditPage.insertCreditCardDataWithEmptyCardNumberField(cardInfo);
+        cardInfo.setCardNumber("");
+        toCreditPage.insertValidCreditCardDataForBank(cardInfo);
         toCreditPage.checkWarningUnderCardNumberField("Неверный формат");
     }
 
@@ -141,7 +142,8 @@ public class CreditTest {
     void shouldShowMessWithEmptyMonthField() {
         var toCreditPage = mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        toCreditPage.insertCreditCardDataWithEmptyMonthField(cardInfo);
+        cardInfo.setMonth("");
+        toCreditPage.insertValidCreditCardDataForBank(cardInfo);
         toCreditPage.checkWarningUnderMonthField("Неверный формат");
     }
 
@@ -150,7 +152,8 @@ public class CreditTest {
     void shouldShowMessWithEmptyYearField() {
         var toCreditPage = mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        toCreditPage.insertCreditCardDataWithEmptyYearField(cardInfo);
+        cardInfo.setYear("");
+        toCreditPage.insertValidCreditCardDataForBank(cardInfo);
         toCreditPage.checkWarningUnderYearField("Неверный формат");
     }
 
@@ -159,7 +162,8 @@ public class CreditTest {
     void shouldShowMessWithEmptyCardOwnerField() {
         var toCreditPage = mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        toCreditPage.insertCreditCardDataWithEmptyCardOwnerField(cardInfo);
+        cardInfo.setCardOwner("");
+        toCreditPage.insertValidCreditCardDataForBank(cardInfo);
         toCreditPage.checkWarningUnderCardOwnerField("Поле обязательно для заполнения");
     }
 
@@ -168,7 +172,8 @@ public class CreditTest {
     void shouldShowMessWithEmptyCvcField() {
         var toCreditPage = mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        toCreditPage.insertCreditCardDataWithEmptyCvcField(cardInfo);
+        cardInfo.setCvc("");
+        toCreditPage.insertValidCreditCardDataForBank(cardInfo);
         toCreditPage.checkWarningUnderCvcField("Неверный формат");
     }
 

@@ -10,6 +10,8 @@ import ru.netology.data.DataHelper;
 import ru.netology.pages.MainPage;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
@@ -132,7 +134,8 @@ public class PaymentTest {
     void shouldShowMessWithEmptyCardNumberField() {
         var toPaymentPage = mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        toPaymentPage.insertPaymentCardDataWithEmptyCardNumberField(cardInfo);
+        cardInfo.setCardNumber("");
+        toPaymentPage.insertValidPaymentCardDataForBank(cardInfo);
         toPaymentPage.checkWarningUnderCardNumberField("Неверный формат");
     }
 
@@ -141,7 +144,8 @@ public class PaymentTest {
     void shouldShowMessWithEmptyMonthField() {
         var toPaymentPage = mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        toPaymentPage.insertPaymentCardDataWithEmptyMonthField(cardInfo);
+        cardInfo.setMonth("");
+        toPaymentPage.insertValidPaymentCardDataForBank(cardInfo);
         toPaymentPage.checkWarningUnderMonthField("Неверный формат");
     }
 
@@ -150,7 +154,8 @@ public class PaymentTest {
     void shouldShowMessWithEmptyYearField() {
         var toPaymentPage = mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        toPaymentPage.insertPaymentCardDataWithEmptyYearField(cardInfo);
+        cardInfo.setYear("");
+        toPaymentPage.insertValidPaymentCardDataForBank(cardInfo);
         toPaymentPage.checkWarningUnderYearField("Неверный формат");
     }
 
@@ -159,7 +164,8 @@ public class PaymentTest {
     void shouldShowMessWithEmptyCardOwnerField() {
         var toPaymentPage = mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        toPaymentPage.insertPaymentCardDataWithEmptyCardOwnerField(cardInfo);
+        cardInfo.setCardOwner("");
+        toPaymentPage.insertValidPaymentCardDataForBank(cardInfo);
         toPaymentPage.checkWarningUnderCardOwnerField("Поле обязательно для заполнения");
     }
 
@@ -168,7 +174,8 @@ public class PaymentTest {
     void shouldShowMessWithEmptyCvcField() {
         var toPaymentPage = mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        toPaymentPage.insertPaymentCardDataWithEmptyCvcField(cardInfo);
+        cardInfo.setCvc("");
+        toPaymentPage.insertValidPaymentCardDataForBank(cardInfo);
         toPaymentPage.checkWarningUnderCvcField("Неверный формат");
     }
 
