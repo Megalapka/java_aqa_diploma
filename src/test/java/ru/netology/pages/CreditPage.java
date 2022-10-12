@@ -52,7 +52,7 @@ public class CreditPage {
         proceedBtn.click();
     }
 
-    public  void clickProceedButton() {
+    public void clickProceedButton() {
         proceedBtn.click();
     }
     public void checkErrorMessDeclineFromBank() {

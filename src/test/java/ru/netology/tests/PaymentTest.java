@@ -1,17 +1,11 @@
 package ru.netology.tests;
-
 import com.codeborne.selenide.Configuration;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
 import ru.netology.pages.MainPage;
 
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
@@ -20,11 +14,20 @@ public class PaymentTest {
 
     MainPage mainPage = open("http://localhost:8080/", MainPage.class);
 
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
     @BeforeEach
     void setUP() {
         Configuration.holdBrowserOpen = true;
     }
 
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
     @AfterEach
     void tearDown() {
         closeWindow();
