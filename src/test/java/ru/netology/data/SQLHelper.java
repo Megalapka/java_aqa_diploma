@@ -13,8 +13,8 @@ public class SQLHelper {
 
     private static QueryRunner runner  = new QueryRunner();
    // private static  String url = System.getProperty("db.url");
-//  private static String url = "jdbc:mysql://localhost:3306/app";
-    private static String url = "jdbc:postgresql://localhost:5432/app";
+  private static String url = "jdbc:mysql://localhost:3306/app";
+//    private static String url = "jdbc:postgresql://localhost:5432/app";
 
 
     public SQLHelper(){
