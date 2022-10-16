@@ -44,10 +44,10 @@ public class CreditPage {
     }
 
     public void insertValidCreditCardDataForBank(DataHelper.CardInfo cardInfo) {
-        cardNumberField.setValue(cardInfo.getCardNumber());
+        cardNumberField.setValue(cardInfo.getNumber());
         monthField.setValue(cardInfo.getMonth());
         yearField.setValue(cardInfo.getYear());
-        cardOwnerField.setValue(cardInfo.getCardOwner());
+        cardOwnerField.setValue(cardInfo.getHolder());
         cvcField.setValue(cardInfo.getCvc());
         proceedBtn.click();
     }

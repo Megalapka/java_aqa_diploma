@@ -137,7 +137,7 @@ public class PaymentTest {
     void shouldShowMessWithEmptyCardNumberField() {
         var toPaymentPage = mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        cardInfo.setCardNumber("");
+        cardInfo.setNumber("");
         toPaymentPage.insertValidPaymentCardDataForBank(cardInfo);
         toPaymentPage.checkWarningUnderCardNumberField("Неверный формат");
     }
@@ -167,7 +167,7 @@ public class PaymentTest {
     void shouldShowMessWithEmptyCardOwnerField() {
         var toPaymentPage = mainPage.paymentPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        cardInfo.setCardOwner("");
+        cardInfo.setHolder("");
         toPaymentPage.insertValidPaymentCardDataForBank(cardInfo);
         toPaymentPage.checkWarningUnderCardOwnerField("Поле обязательно для заполнения");
     }

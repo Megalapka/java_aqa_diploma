@@ -138,7 +138,7 @@ public class CreditTest {
     void shouldShowMessWithEmptyCardNumberField() {
         var toCreditPage = mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        cardInfo.setCardNumber("");
+        cardInfo.setNumber("");
         toCreditPage.insertValidCreditCardDataForBank(cardInfo);
         toCreditPage.checkWarningUnderCardNumberField("Неверный формат");
     }
@@ -168,7 +168,7 @@ public class CreditTest {
     void shouldShowMessWithEmptyCardOwnerField() {
         var toCreditPage = mainPage.creditPage();
         var cardInfo = DataHelper.generateDataWithApprovedCard();
-        cardInfo.setCardOwner("");
+        cardInfo.setHolder("");
         toCreditPage.insertValidCreditCardDataForBank(cardInfo);
         toCreditPage.checkWarningUnderCardOwnerField("Поле обязательно для заполнения");
     }

@@ -108,10 +108,10 @@ public class DataHelper {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CardInfo {
-        String cardNumber;
+        String number;
         String month;
         String year;
-        String cardOwner;
+        String holder;
         String cvc;
     }
 
