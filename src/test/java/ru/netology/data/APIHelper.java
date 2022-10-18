@@ -28,4 +28,14 @@ public class APIHelper {
                 .then()
                 .statusCode(200);
     }
+
+    public static void createCredit(DataHelper.CardInfo cardInfo) {
+        given()
+                .spec(requestSpec)
+                .body(cardInfo)
+                .when()
+                .post("/api/v1/credit")
+                .then()
+                .statusCode(200);
+    }
 }
