@@ -2,22 +2,20 @@ package ru.netology.tests;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import ru.netology.data.APIHelper;
 import ru.netology.data.DataHelper;
 import ru.netology.data.SQLHelper;
-import ru.netology.pages.MainPage;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.codeborne.selenide.Selenide.open;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DBTest {
-   // MainPage mainPage = open("http://localhost:8080/", MainPage.class);
-
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
@@ -118,4 +116,25 @@ public class DBTest {
         assertEquals(formatForDateNow.format(dateNow), dateDB);
     }
 
+    @Test
+    @DisplayName("Should added correct payment data in order_entity table")
+    void shouldAddedCorrectPaymentDataInOrderTable() {
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        APIHelper.createPayment(cardInfo);
+        var cardDataFromPaymentTable = SQLHelper.getPaymentCardData();
+        var cardDataFromOrderTable = SQLHelper.getTableOrderEntity();
+        assertEquals(cardDataFromPaymentTable.getTransaction_id(), cardDataFromOrderTable.getPayment_id());
+        //уточнить у разработчиков связи в БД
+    }
+
+    @Test
+    @DisplayName("Should added correct credit data in order_entity table")
+    void shouldAddedCorrectCreditDataInOrderTable() {
+        var cardInfo = DataHelper.generateDataWithApprovedCard();
+        APIHelper.createCredit(cardInfo);
+        var cardDataFromCreditTable = SQLHelper.getCreditCardData();
+        var cardDataFromOrderTable = SQLHelper.getTableOrderEntity();
+        assertEquals(cardDataFromCreditTable.getBank_id(), cardDataFromOrderTable.getCredit_id());
+        //уточнить у разработчиков связи в БД
+    }
 }
