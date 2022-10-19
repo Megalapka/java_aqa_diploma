@@ -29,5 +29,9 @@
 *для PostgreSQL*:
 > `./gradlew test "-Ddb.url=jdbc:postgresql://localhost:5432/app"`
 
-6. После выполнения всех тестов остановить docker контейнер командой в консоли: 
+6. Формирование Allure отчёта
+> `./gradlew allureReport` - формирование отчета
+> `./gradlew allureServe -отображение отчета
+
+7. После выполнения всех тестов остановить docker контейнер командой в консоли: 
 `docker-compose down`
