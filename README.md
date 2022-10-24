@@ -31,7 +31,8 @@
 
 6. Формирование Allure отчёта
 > `./gradlew allureReport` - формирование отчета
-> `./gradlew allureServe -отображение отчета
+
+> `./gradlew allureServe` -отображение отчета
 
 7. После выполнения всех тестов остановить docker контейнер командой в консоли: 
 `docker-compose down`
