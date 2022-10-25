@@ -12,7 +12,9 @@ import java.sql.SQLException;
 public class SQLHelper {
 
     private static QueryRunner runner  = new QueryRunner();
-     private static  String url = System.getProperty("db.url");
+    private static  String url = System.getProperty("db.url");
+    private static  String userName = System.getProperty("db.username");
+    private static  String password = System.getProperty("db.password");
 //     private static String url = "jdbc:mysql://localhost:3306/app";
 //    private static String url = "jdbc:postgresql://localhost:5432/app";
 
@@ -23,7 +25,7 @@ public class SQLHelper {
 
     @SneakyThrows
     private static Connection getConn() {
-        return DriverManager.getConnection(url, "app", "pass");
+        return DriverManager.getConnection(url, userName, password);
     }
 
 
