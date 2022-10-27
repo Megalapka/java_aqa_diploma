@@ -16,18 +16,18 @@
 1. Запустить приложение командой в консоли
 
  *для MySQL*:
-> `java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar`
+> `java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar`
  
  *для PostgreSQL*:
-> `java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar`
+> `java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" "-Dspring.datasource.username=app" "-Dspring.datasource.password=pass" -jar artifacts/aqa-shop.jar`
 
 5. Запустить авто-тесты команой в консоли 
 
 *для MySQL*:
-> `./gradlew test "-Ddb.url=jdbc:mysql://localhost:3306/app"`
+> ` ./gradlew test "-Ddb.url=jdbc:mysql://localhost:3306/app" "-Ddb.username=app" "-Ddb.password=pass"`
 
 *для PostgreSQL*:
-> `./gradlew test "-Ddb.url=jdbc:postgresql://localhost:5432/app"`
+> `./gradlew test "-Ddb.url=jdbc:postgresql://localhost:5432/app" "-Ddb.username=app" "-Ddb.password=pass"`
 
 6. Формирование Allure отчёта
 > `./gradlew allureReport` - формирование отчета
